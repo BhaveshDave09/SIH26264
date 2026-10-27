@@ -1,6 +1,11 @@
 function getBaseUrl(): string {
-  const envUrl = import.meta.env.VITE_API_URL;
+  let envUrl = import.meta.env.VITE_API_URL;
   if (envUrl) {
+    envUrl = String(envUrl).trim();
+    // If Render injected internal private hostname 'aicte-sentinel-api' without a public domain extension
+    if (!envUrl.includes(".")) {
+      envUrl = `${envUrl}.onrender.com`;
+    }
     const cleanUrl = envUrl.startsWith("http://") || envUrl.startsWith("https://")
       ? envUrl.replace(/\/+$/, "")
       : `https://${envUrl.replace(/\/+$/, "")}`;
@@ -15,6 +20,7 @@ function getBaseUrl(): string {
   // Local development fallback
   return "/api/v1";
 }
+
 
 export const BASE_URL = getBaseUrl();
 
