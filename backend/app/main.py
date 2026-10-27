@@ -1,6 +1,10 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
+
 
 from backend.app.config import settings
 from backend.app.database import engine, Base
@@ -58,3 +62,20 @@ app.include_router(audit.router, prefix=settings.API_V1_STR)
 app.include_router(notifications.router, prefix=settings.API_V1_STR)
 app.include_router(documents.router, prefix=settings.API_V1_STR)
 app.include_router(users.router, prefix=settings.API_V1_STR)
+
+# Serve built frontend SPA if available (e.g. in unified container or production build)
+frontend_dist = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "frontend", "dist")
+if os.path.isdir(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.isdir(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api/") or full_path == "health" or full_path.startswith("docs") or full_path == "openapi.json":
+            return {"detail": "Not found"}
+        target_file = os.path.join(frontend_dist, full_path)
+        if full_path and os.path.isfile(target_file):
+            return FileResponse(target_file)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
+

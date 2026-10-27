@@ -1,0 +1,37 @@
+services:
+  # 1. Backend FastAPI Web Service
+  - type: web
+    name: aicte-sentinel-api
+    runtime: python
+    repo: https://github.com/BhaveshDave09/SIH26264
+    branch: main
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python backend/run_backend.py
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "*"
+
+  # 2. Frontend React Vite Static Site (100% Free, zero compute hour usage)
+  - type: web
+    name: aicte-sentinel-ui
+    runtime: static
+    repo: https://github.com/BhaveshDave09/SIH26264
+    branch: main
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: aicte-sentinel-api
+          property: host
