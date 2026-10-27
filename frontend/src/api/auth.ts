@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import { apiRequest, BASE_URL } from "./client";
+
 
 export interface User {
   id: number;
@@ -23,25 +24,60 @@ export async function loginUser(username: string, password: string): Promise<Log
   formData.append("username", username);
   formData.append("password", password);
 
-  const res = await fetch("/api/v1/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData.toString(),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    });
+  } catch (netErr: any) {
+    throw new Error(`Cannot reach authentication server. If the server is asleep, please wait 30 seconds for it to start. (${netErr.message})`);
+  }
+
+  let rawText = "";
+  try {
+    rawText = await res.text();
+  } catch (readErr: any) {
+    throw new Error(`Failed to read response: ${readErr.message}`);
+  }
+
+  const trimmed = rawText.trim();
+  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head");
 
   if (!res.ok) {
+    if (isHtml) {
+      throw new Error(`Authentication server is currently waking up (HTTP ${res.status}). Please wait ~30 seconds and retry.`);
+    }
     let msg = "Invalid username or password";
-    try {
-      const err = await res.json();
-      msg = err.detail || msg;
-    } catch {}
+    if (trimmed) {
+      try {
+        const err = JSON.parse(trimmed);
+        msg = err.detail || msg;
+      } catch {
+        msg = trimmed.slice(0, 150);
+      }
+    }
     throw new Error(msg);
   }
 
-  return res.json();
+  if (!trimmed) {
+    throw new Error("Authentication server returned an empty response. Please retry.");
+  }
+
+  if (isHtml) {
+    throw new Error("Authentication service returned an unexpected HTML response. The backend is likely still starting up.");
+  }
+
+  try {
+    return JSON.parse(trimmed);
+  } catch (parseErr: any) {
+    throw new Error(`Authentication parse error: ${parseErr.message}`);
+  }
 }
+
 
 export async function getCurrentUser(): Promise<User> {
   return apiRequest<User>("/auth/me");

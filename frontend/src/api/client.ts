@@ -1,8 +1,22 @@
-const API_HOST = import.meta.env.VITE_API_URL
-  ? (import.meta.env.VITE_API_URL.startsWith('http') ? import.meta.env.VITE_API_URL : `https://${import.meta.env.VITE_API_URL}`)
-  : "";
-const BASE_URL = `${API_HOST}/api/v1`;
+function getBaseUrl(): string {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    const cleanUrl = envUrl.startsWith("http://") || envUrl.startsWith("https://")
+      ? envUrl.replace(/\/+$/, "")
+      : `https://${envUrl.replace(/\/+$/, "")}`;
+    return `${cleanUrl}/api/v1`;
+  }
 
+  // If running on Render static domain, automatically target the live Render API
+  if (typeof window !== "undefined" && window.location.hostname.includes("onrender.com")) {
+    return "https://aicte-sentinel-api.onrender.com/api/v1";
+  }
+
+  // Local development fallback
+  return "/api/v1";
+}
+
+export const BASE_URL = getBaseUrl();
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, any>;
@@ -46,7 +60,12 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
     },
   };
 
-  const response = await fetch(url, config);
+  let response: Response;
+  try {
+    response = await fetch(url, config);
+  } catch (networkErr: any) {
+    throw new Error(`Cannot reach backend service. If the server is asleep, please wait 30 seconds for it to start. (${networkErr.message})`);
+  }
 
   if (response.status === 401) {
     // Check if token expired or invalid
@@ -57,24 +76,48 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
     }
   }
 
+  let rawText = "";
+  try {
+    rawText = await response.text();
+  } catch (readErr: any) {
+    throw new Error(`Failed reading response stream: ${readErr.message}`);
+  }
+
+  const trimmed = rawText.trim();
+  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head");
+
   if (!response.ok) {
-    let errorMessage = "An unexpected error occurred";
-    try {
-      const errorData = await response.json();
-      errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData);
-    } catch {
-      errorMessage = response.statusText || String(response.status);
+    if (isHtml) {
+      throw new Error(`Backend server is currently starting up (HTTP ${response.status}). Please wait ~30 seconds and retry.`);
+    }
+    let errorMessage = response.statusText || `Request failed with status ${response.status}`;
+    if (trimmed) {
+      try {
+        const errorData = JSON.parse(trimmed);
+        errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData);
+      } catch {
+        errorMessage = trimmed.slice(0, 150);
+      }
     }
     throw new Error(errorMessage);
   }
 
-  // Handle empty responses (like 204 No Content)
-  if (response.status === 204) {
+  // Handle empty responses (like 204 No Content or zero bytes)
+  if (response.status === 204 || !trimmed) {
     return {} as T;
   }
 
-  return response.json();
+  if (isHtml) {
+    throw new Error("Backend server is currently starting up. Please wait 30 seconds and refresh.");
+  }
+
+  try {
+    return JSON.parse(trimmed);
+  } catch (parseErr: any) {
+    throw new Error(`Invalid response format from server: ${parseErr.message}`);
+  }
 }
+
 
 export async function downloadCsv(endpoint: string, params: Record<string, any> = {}, defaultFilename = "export.csv") {
   const token = localStorage.getItem("token");
