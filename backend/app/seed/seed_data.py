@@ -19,7 +19,7 @@ from backend.app.models.coordination import CoordinationTask, CoordinationUpdate
 from backend.app.models.notification import Notification
 from backend.app.models.audit import AuditEvent
 from backend.app.services.auth import hash_password
-from backend.app.services.audit import record_audit_event, GENESIS_HASH, compute_event_hash, canonical_serialize
+from backend.app.services.audit import GENESIS_HASH, compute_event_hash, canonical_serialize
 from backend.app.services.intelligence import clean_text
 
 def seed_database(force_reset: bool = False):

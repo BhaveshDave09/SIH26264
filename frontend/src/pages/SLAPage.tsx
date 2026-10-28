@@ -1,19 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  ClockAlert,
-  AlertTriangle,
-  Play,
-  CheckCircle2,
-  Calendar,
-  Building2,
-  FolderGit2,
-  ArrowRight,
-  ShieldAlert,
-  Clock,
-  RotateCw,
-} from "lucide-react";
+import { AlertTriangle, CheckCircle2, ArrowRight, RotateCw } from "lucide-react";
 import { getSLASummary, triggerSLAEvaluation } from "../api/sla";
 import { useAuth } from "../context/AuthContext";
 import { Badge } from "../components/Badge";
@@ -28,7 +16,7 @@ export const SLAPage: React.FC = () => {
   );
   const [evalSuccessMsg, setEvalSuccessMsg] = useState<string | null>(null);
 
-  const { data: sla, isLoading, error, refetch } = useQuery({
+  const { data: sla, isLoading, error } = useQuery({
     queryKey: ["sla-summary"],
     queryFn: getSLASummary,
   });
@@ -330,3 +318,4 @@ export const SLAPage: React.FC = () => {
     </div>
   );
 };
+

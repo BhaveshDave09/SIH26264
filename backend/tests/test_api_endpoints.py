@@ -1,4 +1,3 @@
-import pytest
 from starlette.testclient import TestClient
 from backend.app.main import app
 

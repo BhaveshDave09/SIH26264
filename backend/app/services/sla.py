@@ -1,12 +1,10 @@
 from datetime import date, datetime, timezone
-from typing import List, Dict, Any
+from typing import Dict, Any
 from sqlalchemy.orm import Session
 
 from backend.app.config import settings
 from backend.app.models.case import Case, CaseHistory
 from backend.app.models.coordination import CoordinationTask
-from backend.app.models.institution import Institution
-from backend.app.models.user import User
 from backend.app.models.notification import Notification
 from backend.app.services.audit import record_audit_event
 

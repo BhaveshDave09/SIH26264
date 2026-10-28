@@ -8,7 +8,7 @@ from backend.app.models.audit import AuditEvent
 from backend.app.models.user import User
 from backend.app.schemas.audit import AuditEventResponse, AuditVerificationResponse
 from backend.app.services.auth import get_current_user, require_roles
-from backend.app.services.audit import verify_audit_chain, record_audit_event
+from backend.app.services.audit import verify_audit_chain
 
 router = APIRouter(prefix="/audit", tags=["Audit Trail"])
 
@@ -96,3 +96,4 @@ def restore_chain_for_demo(
         prev = ev.event_hash
     db.commit()
     return {"message": "Audit chain re-anchored and cryptographically restored."}
+

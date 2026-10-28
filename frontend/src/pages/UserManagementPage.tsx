@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  Users,
-  Plus,
-  Shield,
-  MapPin,
-  CheckCircle2,
-  AlertTriangle,
-  UserPlus,
-} from "lucide-react";
+import { Shield, UserPlus } from "lucide-react";
 import { getUsers, createUser, CreateUserPayload } from "../api/users";
 import { useAuth } from "../context/AuthContext";
 import { Badge } from "../components/Badge";
@@ -31,7 +23,7 @@ export const UserManagementPage: React.FC = () => {
   });
   const [formError, setFormError] = useState<string | null>(null);
 
-  const { data: usersList = [], isLoading, error } = useQuery({
+  const { data: usersList = [], isLoading } = useQuery({
     queryKey: ["users-all"],
     queryFn: () => getUsers(),
   });
@@ -269,3 +261,4 @@ export const UserManagementPage: React.FC = () => {
     </div>
   );
 };
+

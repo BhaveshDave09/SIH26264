@@ -1,30 +1,8 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  Network,
-  Plus,
-  ClockAlert,
-  Building2,
-  UserCheck,
-  Send,
-  MessageSquare,
-  CheckCircle2,
-  AlertTriangle,
-  FolderGit2,
-  Calendar,
-  Check,
-  ArrowRight,
-} from "lucide-react";
-import {
-  getCoordinationTasks,
-  getCoordinationTaskById,
-  createCoordinationTask,
-  updateCoordinationTask,
-  addCoordinationUpdate,
-  CoordinationTaskItem,
-  CreateCoordinationTaskPayload,
-} from "../api/coordination";
+import { Network, Plus, Send } from "lucide-react";
+import { getCoordinationTasks, getCoordinationTaskById, createCoordinationTask, addCoordinationUpdate, CoordinationTaskItem, CreateCoordinationTaskPayload } from "../api/coordination";
 import { getInstitutions } from "../api/institutions";
 import { getOfficers } from "../api/users";
 import { useAuth } from "../context/AuthContext";
@@ -337,7 +315,7 @@ export const CoordinationPage: React.FC = () => {
               {/* Post Coordination Update (Handoff / Comment / Status) */}
               {!isReadOnly && (
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3 text-xs">
-                  <div className="flex items-center justify-between">
+                  {updateError && <div className="p-2 bg-rose-50 border border-rose-200 text-rose-700 rounded text-xs">{updateError}</div>}`r`n                  <div className="flex items-center justify-between">
                     <span className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">
                       Post Inter-Bureau Update or Handoff
                     </span>
@@ -419,7 +397,7 @@ export const CoordinationPage: React.FC = () => {
                   {selectedTask.updates && selectedTask.updates.length > 0 ? (
                     selectedTask.updates.map((u) => (
                       <div key={u.id} className="p-3.5 text-xs space-y-1">
-                        <div className="flex items-center justify-between">
+                        {updateError && <div className="p-2 bg-rose-50 border border-rose-200 text-rose-700 rounded text-xs">{updateError}</div>}`r`n                  <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
                             <span className="font-bold text-slate-900">@{u.username}</span>
                             <Badge variant="neutral" className="text-[10px]">
@@ -597,3 +575,4 @@ export const CoordinationPage: React.FC = () => {
     </div>
   );
 };
+

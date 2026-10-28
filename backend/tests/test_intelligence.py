@@ -1,4 +1,3 @@
-import pytest
 from backend.app.database import SessionLocal
 from backend.app.services.intelligence import calculate_text_similarity, check_category_affinity, evaluate_case_pair
 from backend.app.models.case import Case

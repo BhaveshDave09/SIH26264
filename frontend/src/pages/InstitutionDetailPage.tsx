@@ -1,19 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import {
-  Building2,
-  MapPin,
-  FolderGit2,
-  GitCompare,
-  Network,
-  ClockAlert,
-  ArrowLeft,
-  ExternalLink,
-  ShieldAlert,
-  Calendar,
-  AlertTriangle,
-} from "lucide-react";
+import { MapPin, GitCompare, ArrowLeft, ExternalLink, AlertTriangle } from "lucide-react";
 import { getInstitution360 } from "../api/institutions";
 import { getCases } from "../api/cases";
 import { getCoordinationTasks } from "../api/coordination";
@@ -321,3 +309,4 @@ export const InstitutionDetailPage: React.FC = () => {
     </div>
   );
 };
+

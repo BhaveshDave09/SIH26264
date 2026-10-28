@@ -1,6 +1,5 @@
-import pytest
 from backend.app.database import SessionLocal
-from backend.app.services.audit import verify_audit_chain, record_audit_event, compute_event_hash
+from backend.app.services.audit import verify_audit_chain, record_audit_event
 from backend.app.models.audit import AuditEvent
 
 def test_audit_chain_validity():

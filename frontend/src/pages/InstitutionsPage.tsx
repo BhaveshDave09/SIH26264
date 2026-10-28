@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  Building2,
-  Search,
-  Plus,
-  MapPin,
-  ExternalLink,
-  ShieldAlert,
-  CheckCircle2,
-  AlertTriangle,
-  Building,
-} from "lucide-react";
+import { Search, Plus, ExternalLink, AlertTriangle, Building } from "lucide-react";
 import { getInstitutions, createInstitution, CreateInstitutionPayload } from "../api/institutions";
 import { useAuth } from "../context/AuthContext";
-import { Badge } from "../components/Badge";
 import { Modal } from "../components/Modal";
 import { LoadingState } from "../components/LoadingState";
 import { EmptyState } from "../components/EmptyState";
@@ -425,3 +414,4 @@ export const InstitutionsPage: React.FC = () => {
     </div>
   );
 };
+

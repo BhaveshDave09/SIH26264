@@ -1,21 +1,8 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  Bell,
-  CheckCheck,
-  CheckCircle2,
-  AlertTriangle,
-  ClockAlert,
-  ArrowRight,
-  ExternalLink,
-} from "lucide-react";
-import {
-  getNotifications,
-  markNotificationAsRead,
-  markAllNotificationsAsRead,
-  NotificationItem,
-} from "../api/notifications";
+import { Bell, CheckCheck, CheckCircle2, ExternalLink } from "lucide-react";
+import { getNotifications, markNotificationAsRead, markAllNotificationsAsRead } from "../api/notifications";
 import { LoadingState } from "../components/LoadingState";
 import { EmptyState } from "../components/EmptyState";
 
@@ -138,3 +125,4 @@ export const NotificationsPage: React.FC = () => {
     </div>
   );
 };
+

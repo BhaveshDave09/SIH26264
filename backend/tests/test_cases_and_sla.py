@@ -1,9 +1,6 @@
-import pytest
-from datetime import date
 from backend.app.database import SessionLocal
 from backend.app.services.sla import evaluate_sla_and_escalations
 from backend.app.services.analytics import get_dashboard_statistics
-from backend.app.models.case import Case
 
 def test_sla_evaluation():
     db = SessionLocal()

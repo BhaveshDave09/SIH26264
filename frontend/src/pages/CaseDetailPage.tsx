@@ -1,23 +1,7 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  FolderGit2,
-  Building2,
-  UserCheck,
-  ArrowRightLeft,
-  Calendar,
-  ClockAlert,
-  ArrowLeft,
-  FileText,
-  Upload,
-  CheckCircle2,
-  AlertTriangle,
-  GitCompare,
-  Download,
-  History,
-  ShieldAlert,
-} from "lucide-react";
+import { Building2, UserCheck, ArrowRightLeft, ArrowLeft, FileText, Upload, CheckCircle2, AlertTriangle, GitCompare, Download, History } from "lucide-react";
 import {
   getCaseById,
   assignOfficer,
@@ -663,4 +647,5 @@ export const CaseDetailPage: React.FC = () => {
     </div>
   );
 };
+
 

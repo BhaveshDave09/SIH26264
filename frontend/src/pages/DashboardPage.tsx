@@ -28,12 +28,10 @@ import {
   Legend,
 } from "recharts";
 import { getDashboardStats } from "../api/dashboard";
-import { useAuth } from "../context/AuthContext";
 import { Badge } from "../components/Badge";
 import { LoadingState } from "../components/LoadingState";
 
 export const DashboardPage: React.FC = () => {
-  const { user } = useAuth();
   const [bureauFilter, setBureauFilter] = useState<string>("ALL");
 
   const { data: stats, isLoading, error, refetch } = useQuery({
@@ -406,3 +404,4 @@ export const DashboardPage: React.FC = () => {
     </div>
   );
 };
+

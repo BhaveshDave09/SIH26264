@@ -1,17 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  BarChart3,
-  Download,
-  Calendar,
-  Building2,
-  Filter,
-  CheckCircle2,
-  TrendingUp,
-  Clock,
-  Layers,
-  ArrowRight,
-} from "lucide-react";
+import { Download, Filter } from "lucide-react";
 import { getReportStats, exportFilteredCasesCsv } from "../api/reports";
 import { Badge } from "../components/Badge";
 import { LoadingState } from "../components/LoadingState";
@@ -252,3 +241,4 @@ export const ReportsPage: React.FC = () => {
     </div>
   );
 };
+

@@ -1,4 +1,3 @@
-import pytest
 from backend.app.services.auth import hash_password, verify_password, create_access_token
 import jwt
 from backend.app.config import settings

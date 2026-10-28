@@ -8,7 +8,6 @@ from sqlalchemy import or_
 from backend.app.database import get_db
 from backend.app.models.coordination import CoordinationTask, CoordinationUpdate
 from backend.app.models.institution import Institution
-from backend.app.models.case import Case
 from backend.app.models.user import User
 from backend.app.schemas.coordination import (
     CoordinationTaskResponse, CoordinationTaskCreate, CoordinationTaskUpdate,

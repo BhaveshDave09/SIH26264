@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 
 from backend.app.config import settings
 from backend.app.models.case import Case
-from backend.app.models.institution import Institution, InstitutionAlias
+from backend.app.models.institution import Institution
 from backend.app.models.relationship import CaseRelationship
 from backend.app.models.notification import Notification
 

@@ -1,25 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  ShieldCheck,
-  ShieldAlert,
-  RotateCw,
-  AlertTriangle,
-  CheckCircle2,
-  Lock,
-  Layers,
-  Key,
-  Database,
-  ArrowRight,
-  Filter,
-} from "lucide-react";
-import {
-  getAuditTrail,
-  verifyAuditChain,
-  simulateTamper,
-  restoreAuditChain,
-  AuditEventItem,
-} from "../api/audit";
+import { ShieldCheck, ShieldAlert, RotateCw, AlertTriangle } from "lucide-react";
+import { getAuditTrail, verifyAuditChain, simulateTamper, restoreAuditChain } from "../api/audit";
 import { useAuth } from "../context/AuthContext";
 import { Badge } from "../components/Badge";
 import { LoadingState } from "../components/LoadingState";
@@ -59,7 +41,7 @@ export const AuditTrailPage: React.FC = () => {
 
   const restoreMutation = useMutation({
     mutationFn: restoreAuditChain,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["audit-verification"] });
       queryClient.invalidateQueries({ queryKey: ["audit-events"] });
       setTamperMessage("Restored: Cryptographic hash chain successfully recomputed and verified.");
@@ -294,3 +276,8 @@ export const AuditTrailPage: React.FC = () => {
     </div>
   );
 };
+
+
+
+
+

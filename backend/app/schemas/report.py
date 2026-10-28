@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
-from datetime import date
+from typing import List
 
 class ReportSummaryItem(BaseModel):
     bureau: str
@@ -23,6 +22,3 @@ class ReportResponse(BaseModel):
     region_summary: List[RegionSummaryItem]
     total_cases_analyzed: int
     avg_resolution_days: float
-    total_confirmed_overlaps: int
-    total_coordination_tasks: int
-    coordination_resolution_rate: float

@@ -1,23 +1,7 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useSearchParams } from "react-router-dom";
-import {
-  GitCompare,
-  AlertTriangle,
-  Building2,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-  ExternalLink,
-  ShieldAlert,
-  ArrowRight,
-  Filter,
-  CheckSquare,
-  XSquare,
-  HelpCircle,
-  Play,
-  RotateCw,
-} from "lucide-react";
+import { GitCompare, AlertTriangle, Building2, CheckCircle2, RotateCw } from "lucide-react";
 import {
   getRelationships,
   reviewRelationship,
@@ -485,3 +469,4 @@ export const IntelligencePage: React.FC = () => {
     </div>
   );
 };
+
