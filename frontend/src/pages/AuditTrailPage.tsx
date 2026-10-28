@@ -189,7 +189,7 @@ export const AuditTrailPage: React.FC = () => {
           </div>
 
           <div className="mt-3 pt-3 border-t border-slate-200/60 text-[11px] text-slate-600">
-            <strong>Architecture Notice:</strong> AICTE Sentinel implements a hash-linked, tamper-evident audit ledger using canonical JSON serialization. While tamper-evident against local record alteration, production deployment requires external blockchain or WORM-storage checkpoints.
+            <strong>Architecture Notice:</strong> NivaranX implements a hash-linked, tamper-evident audit ledger using canonical JSON serialization. While tamper-evident against local record alteration, production deployment requires external blockchain or WORM-storage checkpoints.
           </div>
         </div>
       )}

@@ -1,3 +1,11 @@
+import os
+import sys
+
+# Ensure repository root is in sys.path when running script directly
+_repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+if _repo_root not in sys.path:
+    sys.path.insert(0, _repo_root)
+
 import json
 from datetime import date, datetime, timedelta, timezone
 from sqlalchemy.orm import Session

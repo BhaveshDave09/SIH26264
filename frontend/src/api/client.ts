@@ -14,13 +14,12 @@ function getBaseUrl(): string {
 
   // If running on Render static domain, automatically target the live Render API
   if (typeof window !== "undefined" && window.location.hostname.includes("onrender.com")) {
-    return "https://aicte-sentinel-api.onrender.com/api/v1";
+    return "https://nivaranx-api.onrender.com/api/v1";
   }
 
   // Local development fallback
   return "/api/v1";
 }
-
 
 export const BASE_URL = getBaseUrl();
 
@@ -76,8 +75,10 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
   if (response.status === 401) {
     // Check if token expired or invalid
     if (!endpoint.includes("/auth/login")) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
+      try {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      } catch {}
       window.dispatchEvent(new Event("auth-changed"));
     }
   }
@@ -90,7 +91,8 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
   }
 
   const trimmed = rawText.trim();
-  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head");
+  const lower = trimmed.toLowerCase();
+  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head") || lower.includes("<!doctype html") || lower.includes("<html");
 
   if (!response.ok) {
     if (isHtml) {
@@ -100,7 +102,17 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
     if (trimmed) {
       try {
         const errorData = JSON.parse(trimmed);
-        errorMessage = errorData.detail || errorData.message || JSON.stringify(errorData);
+        if (typeof errorData === "string") {
+          errorMessage = errorData;
+        } else if (errorData && typeof errorData.detail === "string") {
+          errorMessage = errorData.detail;
+        } else if (errorData && Array.isArray(errorData.detail)) {
+          errorMessage = errorData.detail.map((d: any) => d.msg || JSON.stringify(d)).join(", ");
+        } else if (errorData && typeof errorData.message === "string") {
+          errorMessage = errorData.message;
+        } else {
+          errorMessage = JSON.stringify(errorData);
+        }
       } catch {
         errorMessage = trimmed.slice(0, 150);
       }
@@ -123,7 +135,6 @@ export async function apiRequest<T>(endpoint: string, options: RequestOptions = 
     throw new Error(`Invalid response format from server: ${parseErr.message}`);
   }
 }
-
 
 export async function downloadCsv(endpoint: string, params: Record<string, any> = {}, defaultFilename = "export.csv") {
   const token = localStorage.getItem("token");

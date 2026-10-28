@@ -1,6 +1,5 @@
 import { apiRequest, BASE_URL } from "./client";
 
-
 export interface User {
   id: number;
   username: string;
@@ -45,7 +44,8 @@ export async function loginUser(username: string, password: string): Promise<Log
   }
 
   const trimmed = rawText.trim();
-  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head");
+  const lower = trimmed.toLowerCase();
+  const isHtml = trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html") || trimmed.startsWith("<head") || lower.includes("<!doctype html") || lower.includes("<html");
 
   if (!res.ok) {
     if (isHtml) {
@@ -55,7 +55,17 @@ export async function loginUser(username: string, password: string): Promise<Log
     if (trimmed) {
       try {
         const err = JSON.parse(trimmed);
-        msg = err.detail || msg;
+        if (typeof err === "string") {
+          msg = err;
+        } else if (err && typeof err.detail === "string") {
+          msg = err.detail;
+        } else if (err && Array.isArray(err.detail)) {
+          msg = err.detail.map((d: any) => d.msg || JSON.stringify(d)).join(", ");
+        } else if (err && typeof err.message === "string") {
+          msg = err.message;
+        } else {
+          msg = JSON.stringify(err);
+        }
       } catch {
         msg = trimmed.slice(0, 150);
       }
@@ -78,16 +88,16 @@ export async function loginUser(username: string, password: string): Promise<Log
   }
 }
 
-
 export async function getCurrentUser(): Promise<User> {
   return apiRequest<User>("/auth/me");
 }
 
-export async function logoutUser(): Promise<{ message: string }> {
+export async function logoutUser(): Promise<void> {
   try {
-    return await apiRequest<{ message: string }>("/auth/logout", { method: "POST" });
-  } finally {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    await apiRequest("/auth/logout", { method: "POST" });
+  } catch {
+    // Local cleanup always succeeds
   }
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 }

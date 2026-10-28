@@ -1,0 +1,14 @@
+{
+  "name": "aicte-sentinel-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AICTE Sentinel — Integrated Cross-Bureau Complaint & Coordination Dashboard",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "lint": "npm --prefix frontend run lint",
+    "preview": "npm --prefix frontend run preview",
+    "start": "npm --prefix frontend run dev"
+  }
+}
+

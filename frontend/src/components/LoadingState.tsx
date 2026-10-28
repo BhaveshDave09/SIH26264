@@ -1,7 +1,7 @@
 import React from "react";
 import { Loader2 } from "lucide-react";
 
-export const LoadingState: React.FC<{ message?: string }> = ({ message = "Loading data from AICTE Sentinel server..." }) => {
+export const LoadingState: React.FC<{ message?: string }> = ({ message = "Loading data from NivaranX server..." }) => {
   return (
     <div className="flex flex-col items-center justify-center p-12 text-center min-h-[300px]">
       <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-3" />

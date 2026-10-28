@@ -32,8 +32,7 @@ import { Modal } from "../components/Modal";
 import { LoadingState } from "../components/LoadingState";
 
 export const CaseDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const caseId = decodeURIComponent(id || "");
+  const params = useParams(); const rawId = (params as any)["*"] || params.id || ""; const caseId = decodeURIComponent(rawId);
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
@@ -180,7 +179,7 @@ export const CaseDetailPage: React.FC = () => {
                 Potential Overlapping Cases — Coordination Required
               </h3>
               <p className="text-xs text-purple-200 mt-0.5 max-w-2xl">
-                The Sentinel engine identified that another Bureau is investigating related compliance/grievance matters for {caseItem.institution_name}.
+                The NivaranX engine identified that another Bureau is investigating related compliance/grievance matters for {caseItem.institution_name}.
               </p>
             </div>
           </div>
@@ -664,3 +663,4 @@ export const CaseDetailPage: React.FC = () => {
     </div>
   );
 };
+

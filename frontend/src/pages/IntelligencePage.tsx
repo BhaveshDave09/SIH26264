@@ -204,7 +204,7 @@ export const IntelligencePage: React.FC = () => {
       ) : relationships.length === 0 ? (
         <EmptyState
           title="No candidate relationships found"
-          description="The AICTE Sentinel cross-bureau engine has not detected unexamined overlaps for this filter."
+          description="The NivaranX cross-bureau engine has not detected unexamined overlaps for this filter."
           icon={<GitCompare className="w-8 h-8 text-slate-400" />}
         />
       ) : (
@@ -333,7 +333,7 @@ export const IntelligencePage: React.FC = () => {
                 {/* Explanation & Recommended Action */}
                 <div className="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1">
                   <p className="text-slate-700 leading-relaxed font-medium">
-                    <span className="font-bold text-slate-900">Sentinel Explanation:</span> {rel.explanation}
+                    <span className="font-bold text-slate-900">NivaranX Explanation:</span> {rel.explanation}
                   </p>
                   <p className="text-blue-950 font-semibold pt-1">
                     <span className="text-slate-900 font-bold">Recommended Action:</span> {rel.recommended_action}

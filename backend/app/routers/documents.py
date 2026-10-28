@@ -18,7 +18,7 @@ router = APIRouter(prefix="/documents", tags=["Supporting Documents"])
 
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
-@router.post("/cases/{case_id}/upload", response_model=DocumentResponse)
+@router.post("/cases/{case_id:path}/upload", response_model=DocumentResponse)
 async def upload_case_document(
     case_id: str,
     file: UploadFile = File(...),

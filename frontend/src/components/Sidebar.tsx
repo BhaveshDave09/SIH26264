@@ -50,7 +50,7 @@ export const Sidebar: React.FC = () => {
         </div>
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-white text-base tracking-tight">AICTE SENTINEL</span>
+            <span className="font-bold text-white text-base tracking-tight">NivaranX</span>
           </div>
           <p className="text-[10px] text-teal-400 font-medium uppercase tracking-wider">
             SIH 2026 • PS ID: 26264

@@ -47,7 +47,7 @@ export const LoginPage: React.FC = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-blue-600/30 border border-blue-400/30 mb-3 shadow-inner">
             <Shield className="w-8 h-8 text-teal-400 stroke-[2.2]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">AICTE SENTINEL</h1>
+          <h1 className="text-2xl font-bold tracking-tight">NivaranX</h1>
           <p className="text-xs text-blue-200 mt-1 max-w-xs mx-auto">
             Integrated Dashboard for Monitoring & Tracking Cases Across AICTE Bureaus / Cells
           </p>
@@ -101,7 +101,7 @@ export const LoginPage: React.FC = () => {
               disabled={loading}
               className="w-full py-2.5 bg-blue-700 hover:bg-blue-800 text-white font-medium text-sm rounded-lg shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
-              <span>{loading ? "Authenticating..." : "Sign In to Sentinel"}</span>
+              <span>{loading ? "Authenticating..." : "Sign In to NivaranX"}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>

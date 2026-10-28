@@ -1,10 +1,10 @@
 @echo off
 echo ====================================================
-echo   AICTE SENTINEL - Frontend Client Startup
+echo   NivaranX - Frontend Client Startup
 echo   Smart India Hackathon 2026 (PS ID: 26264)
 echo ====================================================
 echo.
-cd /d "%~dp0\frontend"
+cd /d "%~dp0frontend"
 
 echo [1/2] Checking Node.js environment...
 node --version

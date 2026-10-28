@@ -25,7 +25,7 @@ const ProtectedLayout: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">
-        <LoadingState message="Connecting to AICTE Sentinel backend..." />
+        <LoadingState message="Connecting to NivaranX backend..." />
       </div>
     );
   }
@@ -60,6 +60,7 @@ export function App() {
             <Route path="/institutions/:id" element={<InstitutionDetailPage />} />
             <Route path="/cases" element={<CasesPage />} />
             <Route path="/cases/:id" element={<CaseDetailPage />} />
+            <Route path="/cases/*" element={<CaseDetailPage />} />
             <Route path="/intelligence" element={<IntelligencePage />} />
             <Route path="/coordination" element={<CoordinationPage />} />
             <Route path="/sla" element={<SLAPage />} />

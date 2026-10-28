@@ -1,10 +1,9 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
-
 
 from backend.app.config import settings
 from backend.app.database import engine, Base
@@ -41,6 +40,7 @@ app.add_middleware(
 
 # Health endpoint
 @app.get("/health", tags=["System"])
+@app.get(f"{settings.API_V1_STR}/health", tags=["System"])
 def health_check():
     return {
         "status": "healthy",
@@ -73,9 +73,8 @@ if os.path.isdir(frontend_dist):
     @app.get("/{full_path:path}")
     async def serve_spa(full_path: str):
         if full_path.startswith("api/") or full_path == "health" or full_path.startswith("docs") or full_path == "openapi.json":
-            return {"detail": "Not found"}
+            raise HTTPException(status_code=404, detail="API endpoint not found")
         target_file = os.path.join(frontend_dist, full_path)
         if full_path and os.path.isfile(target_file):
             return FileResponse(target_file)
         return FileResponse(os.path.join(frontend_dist, "index.html"))
-

@@ -9,7 +9,7 @@ def test_health_check_endpoint():
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "healthy"
-    assert data["app"] == "AICTE Sentinel"
+    assert data["app"] == "NivaranX"
 
 def test_auth_login_success():
     res = client.post("/api/v1/auth/login", data={"username": "superadmin", "password": "Admin@123"})
@@ -76,3 +76,18 @@ def test_audit_verify_api_endpoint():
     result = res.json()
     assert result["is_valid"] is True
     assert result["total_events"] > 0
+
+
+def test_get_case_detail_with_slashes():
+    login_res = client.post("/api/v1/auth/login", data={"username": "superadmin", "password": "Admin@123"})
+    token = login_res.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # Test case ID containing slashes: AICTE/PGRC/2026/001
+    res = client.get("/api/v1/cases/AICTE/PGRC/2026/001", headers=headers)
+    assert res.status_code == 200
+    data = res.json()
+    assert data["id"] == "AICTE/PGRC/2026/001"
+    assert "history" in data
+    assert "documents" in data
+

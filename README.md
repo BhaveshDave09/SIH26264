@@ -205,8 +205,8 @@ The repository includes a production-ready [`render.yaml`](render.yaml) Blueprin
 2. In the Render Dashboard, click **New +** &rarr; **Blueprint**.
 3. Connect your repository: **`BhaveshDave09/SIH26264`**.
 4. Render detects [`render.yaml`](render.yaml) and creates:
-   - **`aicte-sentinel-api`**: FastAPI Web Service (Python, SQLite, Uvicorn, Health checks).
-   - **`aicte-sentinel-ui`**: React Static Site (100% free hosting, auto-rewrites for SPA routing).
+   - **`nivaranx-api`**: FastAPI Web Service (Python, SQLite, Uvicorn, Health checks).
+   - **`nivaranx-ui`**: React Static Site (100% free hosting, auto-rewrites for SPA routing).
 5. Click **Apply**. Within ~2 minutes, your live public URL will be active and ready to share with SIH evaluators!
 
 ---

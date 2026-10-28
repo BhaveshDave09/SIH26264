@@ -138,7 +138,7 @@ def list_cases(
         "total_pages": total_pages
     }
 
-@router.get("/{id}", response_model=CaseResponse)
+@router.get("/{id:path}", response_model=CaseResponse)
 def get_case_detail(id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """Retrieves single case details with timeline, officer assignment, and overlap intelligence."""
     case = db.query(Case).filter(Case.id == id).first()
@@ -239,7 +239,7 @@ def create_case(
 
     return enrich_case_response(new_case, db)
 
-@router.put("/{id}", response_model=CaseResponse)
+@router.put("/{id:path}", response_model=CaseResponse)
 def update_case(
     id: str,
     payload: CaseUpdate,
@@ -293,7 +293,7 @@ def update_case(
 
     return enrich_case_response(case, db)
 
-@router.post("/{id}/assign", response_model=CaseResponse)
+@router.post("/{id:path}/assign", response_model=CaseResponse)
 def assign_officer(
     id: str,
     payload: CaseAssignRequest,
@@ -337,7 +337,7 @@ def assign_officer(
 
     return enrich_case_response(case, db)
 
-@router.post("/{id}/transfer", response_model=CaseResponse)
+@router.post("/{id:path}/transfer", response_model=CaseResponse)
 def transfer_bureau(
     id: str,
     payload: CaseTransferRequest,
@@ -391,7 +391,7 @@ def transfer_bureau(
 
     return enrich_case_response(case, db)
 
-@router.post("/{id}/status", response_model=CaseResponse)
+@router.post("/{id:path}/status", response_model=CaseResponse)
 def update_case_status(
     id: str,
     payload: CaseStatusUpdateRequest,

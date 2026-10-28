@@ -43,5 +43,5 @@ export async function exportFilteredCasesCsv(params: {
   priority?: string;
   region?: string;
 } = {}) {
-  await downloadCsv("/reports/export/csv", params, "AICTE_Sentinel_Cases_Export.csv");
+  await downloadCsv("/reports/export/csv", params, "NivaranX_Cases_Export.csv");
 }

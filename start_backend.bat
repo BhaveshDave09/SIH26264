@@ -1,6 +1,6 @@
 @echo off
 echo ====================================================
-echo   AICTE SENTINEL - Backend Server Startup
+echo   NivaranX - Backend Server Startup
 echo   Smart India Hackathon 2026 (PS ID: 26264)
 echo ====================================================
 echo.

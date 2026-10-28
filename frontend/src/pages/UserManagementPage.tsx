@@ -80,7 +80,7 @@ export const UserManagementPage: React.FC = () => {
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">User Administration &amp; RBAC</h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Role-Based &amp; Attribute-Based Access Control (RBAC/ABAC) directory for AICTE Sentinel
+            Role-Based &amp; Attribute-Based Access Control (RBAC/ABAC) directory for NivaranX
           </p>
         </div>
 

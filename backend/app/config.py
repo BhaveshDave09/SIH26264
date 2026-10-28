@@ -2,7 +2,7 @@ import os
 from typing import List
 
 class Settings:
-    APP_NAME: str = "AICTE Sentinel"
+    APP_NAME: str = "NivaranX"
     APP_VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
     

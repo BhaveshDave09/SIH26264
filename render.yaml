@@ -1,7 +1,7 @@
 services:
   # 1. Backend FastAPI Web Service
   - type: web
-    name: aicte-sentinel-api
+    name: nivaranx-api
     runtime: python
     repo: https://github.com/BhaveshDave09/SIH26264
     branch: main
@@ -19,7 +19,7 @@ services:
 
   # 2. Frontend React Vite Static Site (100% Free, zero compute hour usage)
   - type: web
-    name: aicte-sentinel-ui
+    name: nivaranx-ui
     runtime: static
     repo: https://github.com/BhaveshDave09/SIH26264
     branch: main
@@ -31,5 +31,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        value: https://aicte-sentinel-api.onrender.com
-
+        value: https://nivaranx-api.onrender.com

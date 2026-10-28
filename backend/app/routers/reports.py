@@ -175,7 +175,7 @@ def export_cases_csv(
         ])
 
     output.seek(0)
-    filename = f"AICTE_Sentinel_Cases_Export_{date.today().isoformat()}.csv"
+    filename = f"NivaranX_Cases_Export_{date.today().isoformat()}.csv"
     return StreamingResponse(
         iter([output.getvalue()]),
         media_type="text/csv",

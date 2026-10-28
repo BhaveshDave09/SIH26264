@@ -24,8 +24,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem("user");
+      if (saved && saved !== "undefined" && saved !== "null") {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.warn("Failed to parse cached user:", e);
+      try {
+        localStorage.removeItem("user");
+      } catch {}
+    }
+    return null;
   });
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,13 +44,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (token) {
       getCurrentUser()
         .then((u) => {
-          setUser(u);
-          localStorage.setItem("user", JSON.stringify(u));
+          if (u) {
+            setUser(u);
+            localStorage.setItem("user", JSON.stringify(u));
+          }
         })
         .catch(() => {
           setUser(null);
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
+          try {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+          } catch {}
         })
         .finally(() => setLoading(false));
     } else {
@@ -56,13 +70,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (u: string, p: string) => {
     const res = await loginUser(u, p);
-    localStorage.setItem("token", res.access_token);
-    localStorage.setItem("user", JSON.stringify(res.user));
-    setUser(res.user);
+    if (res?.access_token) {
+      localStorage.setItem("token", res.access_token);
+    }
+    if (res?.user) {
+      localStorage.setItem("user", JSON.stringify(res.user));
+      setUser(res.user);
+    }
   };
 
   const logout = async () => {
     await logoutUser();
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } catch {}
     setUser(null);
   };
 
